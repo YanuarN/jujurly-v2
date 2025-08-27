@@ -23,6 +23,14 @@ const RegisterPage: React.FC = () => {
       duration: 1000,
     });
   }, []);
+
+  const isAuthenticated = !!localStorage.getItem("userData");
+  React.useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard");
+    }
+  });
+
   const navigate = useNavigate();
 
   // const dispatch = useDispatch();

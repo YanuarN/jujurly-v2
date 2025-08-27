@@ -14,16 +14,15 @@ import UserLookupPage from "./pages/UserLookupPage/UserLookupPage";
 import DashboardPage from "./pages/DashboardPage/DashboardPage";
 
 function App() {
-  const isAuthenticated = !!localStorage.getItem("userData");
   return (
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/beri-feedback" element={<UserLookupPage />} />
         <Route path="/beri-feedback/:userId" element={<FeedbackPage />} />
-        <Route path="/dashboard" element={isAuthenticated ? <DashboardPage /> : <LoginPage />} />
-        <Route path="/register" element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <RegisterPage />}/>
-        <Route path="/login" element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <LoginPage />}/>
+        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/register" element={ <RegisterPage />}/>
+        <Route path="/login" element={<LoginPage />}/>
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

@@ -27,6 +27,13 @@ const LoginPage: React.FC = () => {
     });
   }, []);
 
+  const isAuthenticated = !!localStorage.getItem("userData");
+  React.useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard");
+    }
+  });
+
   const handleLogin = async (data: Login) => {
     const toastId = toast.loading("Logging in...");
     try {

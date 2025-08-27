@@ -22,6 +22,13 @@ const DashboardPage: React.FC = () => {
     });
   }, []);
 
+  const isAuthenticated = !!localStorage.getItem("userData");
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login");
+    }
+  }, [isAuthenticated]);
+
   const [currentFeedbacks, setCurrentFeedbacks] = useState<FeedbackItem[]>([]);
   const [feedbacks, setFeedbacks] = useState<FeedbackItem[]>([]);
   // const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -116,11 +123,11 @@ const DashboardPage: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (backend) {
+    if (isAuthenticated && backend) {
       handleFeedbackList();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isAuthenticated]);
 
   useEffect(() => {
     if (searchValue !== undefined) {
