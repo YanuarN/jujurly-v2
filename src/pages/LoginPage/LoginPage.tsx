@@ -8,7 +8,7 @@ import AppButton from "../../components/atoms/AppButton/AppButton";
 import AppTextField from "../../components/atoms/AppTextField/AppTextField";
 import AppRichTextButton from "../../components/molecules/AppRichTextButton/AppRichTextButton";
 import type { Login } from "../../utils/types";
-// import { Icon } from "@iconify/react";
+import { Icon } from "@iconify/react";
 import { useEffect } from "react";
 import AOS from "aos";
 import { updateToastConfig } from "../../utils/helper";
@@ -57,9 +57,9 @@ const LoginPage: React.FC = () => {
     handleLogin(data as Login);
   };
 
-return (
-    <AppContainer className="w-full min-h-screen flex items-center justify-center bg-gradient-to-t from-blue-400 via-blue-300 to-blue-100 p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10">
-      <AppContainer className="w-full max-w-[350px] sm:max-w-[500px] md:max-w-[800px] lg:max-w-[1000px] xl:max-w-[1200px] min-h-[500px] sm:min-h-[600px] md:h-[700px] lg:h-[750px] xl:h-[800px] bg-white rounded-xl sm:rounded-2xl shadow-2xl flex flex-col md:flex-row lg:flex-row xl:flex-row overflow-hidden">
+  return (
+    <AppContainer className="w-full min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-400 via-blue-300 to-blue-200 p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10">
+      <AppContainer className="w-full max-w-[350px] sm:max-w-[500px] md:max-w-[800px] lg:max-w-[1000px] xl:max-w-[1200px] min-h-auto md:h-[700px] lg:h-[750px] xl:h-[800px] bg-white rounded-xl sm:rounded-2xl shadow-2xl flex flex-col md:flex-row overflow-hidden">
         <AppContainer className="w-full md:w-1/2 lg:w-1/2 xl:w-1/2 bg-blue-500 flex flex-col items-center justify-center p-4 sm:p-6 md:p-6 lg:p-8 xl:p-10 relative order-1 md:order-1 lg:order-1 xl:order-1">
           <AppContainer className="flex flex-col items-center justify-center h-full">
             <AppHeadline
@@ -70,9 +70,9 @@ return (
               title="Dari feedback kecil, lahir perubahan besar"
               subtitle="Yuk, jadi bagian dari perjalanan membangun sesuatu yang lebih baik bareng Jujurly!"
             />
-            <img 
-              src="/images/team.svg" 
-              alt="Team Performance" 
+            <img
+              src="/images/team.svg"
+              alt="Team Performance"
               className="w-full max-w-[500px] sm:max-w-[220px] md:max-w-[280px] lg:max-w-[350px] xl:max-w-[400px] h-auto mt-3 sm:mt-4 md:mt-0 lg:mt-2 xl:mt-4"
               data-aos="fade-right"
             />
@@ -152,6 +152,7 @@ return (
             <AppRichTextButton
               dataAos="fade-left"
               dataAosDelay={600}
+              className="text-gray-600 text-xs sm:text-sm md:text-sm lg:text-[14px] xl:text-[14px] font-poppins"
               title="Don't have an account?"
               subtitle="Register"
               onClick={() => {
@@ -160,6 +161,13 @@ return (
             />
           </AppContainer>
         </AppContainer>
+        <Icon
+          data-aos="fade-right"
+          data-aos-delay={600}
+          icon={"mdi:home"}
+          className="text-gray-700 bg-white/80 backdrop-blur-sm hover:bg-white border border-gray-200 rounded-full text-[40px] p-[8px] absolute z-20 top-[20px] left-[20px] cursor-pointer hover:shadow-lg transition-all duration-200"
+          onClick={() => navigate("/")}
+        />
       </AppContainer>
     </AppContainer>
   );

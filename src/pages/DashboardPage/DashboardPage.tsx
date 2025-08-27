@@ -16,7 +16,7 @@ import { toast } from "react-toastify";
 import * as feedbackRepository from "../../api/repository/feedbackRepository";
 
 const DashboardPage: React.FC = () => {
-    useEffect(() => {
+  useEffect(() => {
     const userData = localStorage.getItem("userData");
     if (!userData) {
       navigate("/login");
@@ -29,43 +29,14 @@ const DashboardPage: React.FC = () => {
   }, []);
 
   const [currentFeedbacks, setCurrentFeedbacks] = useState<FeedbackItem[]>([]);
-  const [feedbacks, setFeedbacks] = useState<FeedbackItem[]>([
-    {
-      id: 1,
-      sender: "Rina",
-      timestamp: "2025-06-25T10:30:00Z",
-      context: "Landing Page",
-      sentiment: "positif",
-      summary: "Tampilan landing page terlihat menarik dan bersih.",
-      constructiveCriticism:
-        "Coba tambahkan CTA (Call To Action) yang lebih menonjol di atas lipatan.",
-    },
-    {
-      id: 2,
-      sender: "",
-      timestamp: "2025-06-25T11:15:00Z",
-      context: "Formulir Kontak",
-      sentiment: "negatif",
-      summary: "Formulir terlihat membingungkan.",
-      constructiveCriticism:
-        "Sederhanakan form dengan mengurangi jumlah field dan tambahkan label yang jelas.",
-    },
-
-    {
-      id: 3,
-      sender: "Anonim",
-      timestamp: "2025-06-25T13:45:00Z",
-      context: "-",
-      sentiment: "netral",
-      summary: "Fitur sudah berjalan baik namun belum ada yang menonjol.",
-      constructiveCriticism:
-        "Bisa ditambahkan animasi atau transisi kecil untuk memberi kesan interaktif.",
-    },
-  ]);
+  const [feedbacks, setFeedbacks] = useState<FeedbackItem[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
   const [feedbackViewOpen, setfeedbackViewOpen] = useState<boolean>(false);
-  const [, setFeedback] = useState<FeedbackItem | null>(null);
+  // Perbaikan: Menggunakan selectedFeedback yang konsisten
+  const [selectedFeedback, setSelectedFeedback] = useState<FeedbackItem | null>(
+    null
+  );
   const [user, setUser] = useState<{ username?: string; email: string }>({
     email: "",
   });
@@ -96,11 +67,12 @@ const DashboardPage: React.FC = () => {
     console.log(isLoading);
     try {
       const res = await feedbackRepository.getFeedbacks();
+      console.log(res);
       if (res.statusNumber == 200) {
         setFeedbacks(res.data);
         setCurrentFeedbacks(res.data);
       } else {
-        toast.error(res.message || "Gagal Mengambil data Feedbacks");
+        toast.error("Gagal Mengambil data Feedbacks");
       }
       setIsLoading(false);
     } catch (error) {
@@ -139,7 +111,7 @@ const DashboardPage: React.FC = () => {
     setFeedbacks(filteredNotes);
   };
 
-  const backend = false;
+  const backend = true;
 
   useEffect(() => {
     if (getUser) {
@@ -211,30 +183,57 @@ const DashboardPage: React.FC = () => {
               }}
             />
             <AppFilterFeedback />
-            <AppContainer className="flex flex-col items-start  gap-[10px] overflow-y-auto flex-grow  ">
-              {feedbacks.map((fb) => (
-                <AppFeedbackCard
-                  key={fb.id}
-                  checkMode={checkedMode}
-                  checked={selectedFeedbackIds.includes(fb?.id || 0)}
-                  sender={fb.sender}
-                  sentiment={fb.sentiment as "positif" | "negatif" | "netral"}
-                  context={fb.context}
-                  summary={fb.summary}
-                  constructiveCriticism={fb.constructiveCriticism}
-                  timestamp={convertDateString(fb.timestamp)}
-                  onClickCard={() => {
-                    if (!checkedMode) {
-                      setFeedback(fb as FeedbackItem);
-                      setfeedbackViewOpen(true);
-                    }
-                    console.log("hay");
-                  }}
-                  onChecked={(value: boolean) => {
-                    handleFeedbackSelected(value, fb.id || 0);
-                  }}
-                />
-              ))}
+            <AppContainer className="flex flex-col items-start gap-[10px] overflow-y-auto flex-grow">
+              {feedbacks.length === 0 ? (
+                <AppContainer className="w-full h-full flex flex-col items-center justify-center text-center py-20">
+                  <AppContainer className="mb-6">
+                    <svg
+                      className="w-24 h-24 text-gray-300 mx-auto mb-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.5}
+                        d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                      />
+                    </svg>
+                  </AppContainer>
+                  <h3 className="text-xl font-semibold text-gray-600 mb-3">
+                    Belum Ada Feedback Masuk!
+                  </h3>
+                  <p className="text-gray-500 mb-4 max-w-md">
+                    Sepertinya kotak feedback kamu masih kosong. Yuk, sebarkan
+                    link feedback kamu dan dengarkan apa kata orang lain tentang
+                    dirimu!
+                  </p>
+                </AppContainer>
+              ) : (
+                feedbacks.map((fb) => (
+                  <AppFeedbackCard
+                    key={fb.id}
+                    checkMode={checkedMode}
+                    checked={selectedFeedbackIds.includes(fb?.id || 0)}
+                    sender={fb.sender}
+                    sentiment={fb.sentiment}
+                    context={fb.context}
+                    summary={fb.summary}
+                    constructiveCriticism={fb.constructiveCriticism}
+                    timestamp={convertDateString(fb.timestamp)}
+                    onClickCard={() => {
+                      if (!checkedMode) {
+                        setSelectedFeedback(fb);
+                        setfeedbackViewOpen(true);
+                      }
+                    }}
+                    onChecked={(value: boolean) => {
+                      handleFeedbackSelected(value, fb.id || 0);
+                    }}
+                  />
+                ))
+              )}
             </AppContainer>
           </AppContainer>
           {/*  */}
@@ -244,21 +243,22 @@ const DashboardPage: React.FC = () => {
             w-full h-full
             hidden sm:hidden md:flex lg:flex  xl:flex flex-col gap-[20px] rounded-2xl shadow-xl flex-grow   `}
           >
-            <AppContainer className="flex flex-col w-full h-full gap-[10px] rounded-2xl ">
-              <AppFeedbackView
-                id={1}
-                sender="Rina"
-                sentiment="positif"
-                context="Landing Page"
-                summary="Necessitatibus illum soluta quam consequatur eos. Quos dignissimos molestias qui quis quasi voluptatem a sit. Velit aut quia deleniti quasi ea accusantium. Et ut nemo quia tempore necessitatibus accusantium qui vitae explicabo. Alias cum quia laudantium expedita. Et placeat doloremque suscipit culpa magni consectetur.
-                  
-                  Ipsa sit voluptatem neque quaerat aut sapiente quis culpa. Rem iure corrupti sit. Error et qui. Consectetur placeat blanditiis itaque est qui non et et. Ea omnis est quis blanditiis consequatur ab quae et nisi. Iusto expedita sunt repudiandae qui molestias et.
-                  
-                  Enim quo provident sed inventore impedit praesentium. Natus reiciendis harum qui. Ipsa et est."
-                constructiveCriticism="Coba tambahkan CTA (Call To Action) yang lebih menonjol di atas lipatan."
-                timestamp="2025-06-25T10:30:00Z"
-                onClose={() => setfeedbackViewOpen(false)}
-              />
+            <AppContainer className="flex flex-col w-full h-full gap-[10px] rounded-2xl">
+              {selectedFeedback && (
+                <AppFeedbackView
+                  id={selectedFeedback.id}
+                  sender={selectedFeedback.sender || "Anonim"}
+                  sentiment={selectedFeedback.sentiment}
+                  context={selectedFeedback.context || "-"}
+                  summary={selectedFeedback.summary || "Tidak ada ringkasan"}
+                  constructiveCriticism={
+                    selectedFeedback.constructiveCriticism ||
+                    "Tidak ada saran spesifik saat ini."
+                  }
+                  timestamp={selectedFeedback.timestamp}
+                  onClose={() => setfeedbackViewOpen(false)}
+                />
+              )}
             </AppContainer>
           </AppContainer>
         </AppContainer>

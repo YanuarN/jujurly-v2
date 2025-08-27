@@ -5,7 +5,7 @@ import { useState, useRef } from "react";
 
 interface AppFeedbackCard {
   sender?: string;
-  sentiment?: "positif" | "negatif" | "netral";
+  sentiment?: string;
   context?: string;
   summary?: string;
   constructiveCriticism?: string;
@@ -51,7 +51,7 @@ const AppFeedbackCard: React.FC<AppFeedbackCard> = (props) => {
             </p>
 
             <AppChipSentiment
-              type={props.sentiment as "positif" | "negatif" | "netral"}
+              type={props.sentiment || ""}
             />
           </AppContainer>
           <p className="text-[12px] text-gray-400 min-w-fit">

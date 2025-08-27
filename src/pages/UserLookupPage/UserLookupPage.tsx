@@ -33,11 +33,11 @@ const UserLookupPage: React.FC = () => {
       const res = await userRepository.userLookup(data.targetUser as string);
       if (res.statusNumber === 200) {
         setUserData(res.data);
-        console.log(userData);
         toast.update(
           toastId,
           updateToastConfig("Pengguna ditemukan", "success")
         );
+        navigate(`/beri-feedback/${data.targetUser}`);
       } else {
         toast.update(
           toastId,

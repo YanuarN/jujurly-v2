@@ -6,7 +6,7 @@ import { Icon } from "@iconify/react";
 interface AppFeedbackViewProps {
   id: number;
   sender?: string;
-  sentiment?: "positif" | "negatif" | "netral";
+  sentiment?: string;
   context?: string;
   summary?: string;
   constructiveCriticism?: string;

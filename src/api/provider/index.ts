@@ -14,7 +14,7 @@ export const PROVIDER_GET = async (pathUrl: string) => {
     switch (response.status) {
       case 200:
       case 201:
-        return { ...response.data, statusNumber: response.status };
+        return { data: response.data, statusNumber: response.status };
       default:
         throw new Error("error");
     }

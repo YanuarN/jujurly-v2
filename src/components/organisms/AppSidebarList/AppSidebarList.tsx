@@ -2,6 +2,7 @@
 
 import AppContainer from "../../atoms/AppContainer/AppContainer";
 import AppSideBar from "../../molecules/AppSidebar/AppSidebar";
+import { useNavigate } from "react-router-dom";
 
 const AppSideBarList: React.FC = () => {
   //   const { push } = useRouter();
@@ -25,6 +26,12 @@ const AppSideBarList: React.FC = () => {
   //       toast.error("Internal server error. Please try again later.");
   //     }
   //   };
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("userData");
+    navigate("/login");
+  };
 
   return (
     <AppContainer className=" h-full flex flex-col gap-[30px] p-[10px]">
@@ -37,7 +44,7 @@ const AppSideBarList: React.FC = () => {
           text="Dashboard"
           isSelected={true}
         />
-        <AppSideBar icon="mdi:logout" text="Logout" onClick={() => {}} />
+        <AppSideBar icon="mdi:logout" text="Logout" onClick={handleLogout} />
       </AppContainer>
     </AppContainer>
   );

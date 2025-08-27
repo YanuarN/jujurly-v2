@@ -91,7 +91,7 @@ function FeedbackForm({ userId }: FeedbackFormProps) {
   return (
     <>
       <AppContainer className="flex w-full h-screen bg-gray-100/70 relative">
-        <AppContainer className="w-[30%] hidden sm:hidden md:flex lg:flex  xl:flex  h-full pt-[50px] items-start justify-center">
+        <AppContainer className="w-[20%] hidden sm:hidden md:flex lg:flex  xl:flex  h-full pt-[300px] items-start justify-center">
           <AppContainer className="flex flex-col  w-[80%] gap-[30px] items-start w-[] mt-[20px] ">
             {textFeedbackPrimary.map((data, index) => {
               return (
@@ -125,11 +125,11 @@ function FeedbackForm({ userId }: FeedbackFormProps) {
             })}
           </AppContainer>
         </AppContainer>
-        <AppContainer className="w-full sm:w-full  md:w-[70%] lg:w-[70%] xl:w-[70%] h-full bg-white flex items-center justify-center">
+        <AppContainer className="w-full sm:w-full  md:w-[80%] lg:w-[80%] xl:w-[80%] h-full bg-blue-400 flex items-center justify-center">
           <AppContainer className=" flex flex-col  w-[90%] sm:w-[60%] md:w-[60%] lg:w-[60%]  xl:w-[60%] ">
             <form onSubmit={() => {}} className="flex flex-col">
               {step === 1 && (
-                <AppContainer className="flex flex-col gap-[20px]">
+                <AppContainer className="flex flex-col gap-6 bg-white rounded-2xl shadow-lg p-8">
                   <AppHeadline
                     titleDataAos="fade-down"
                     subtitleDataAos="fade-down"
@@ -167,7 +167,7 @@ function FeedbackForm({ userId }: FeedbackFormProps) {
               )}
 
               {step === 2 && (
-                <AppContainer className="flex flex-col gap-[20px]">
+                <AppContainer className="flex flex-col gap-6 bg-white rounded-2xl shadow-lg p-8">
                   <AppHeadline
                     titleDataAos="fade-down"
                     subtitleDataAos="fade-down"
@@ -205,7 +205,7 @@ function FeedbackForm({ userId }: FeedbackFormProps) {
               )}
 
               {step === 3 && (
-                <AppContainer className="flex flex-col gap-[20px]">
+                <AppContainer className="flex flex-col gap-6 bg-white rounded-2xl shadow-lg p-8">
                   <AppHeadline
                     titleDataAos="fade-down"
                     subtitleDataAos="fade-down"
@@ -243,7 +243,7 @@ function FeedbackForm({ userId }: FeedbackFormProps) {
               )}
 
               {step === 4 && (
-                <AppContainer className="flex flex-col gap-[20px]">
+                <AppContainer className="flex flex-col gap-6 bg-white rounded-2xl shadow-lg p-8">
                   <AppHeadline
                     titleDataAos="fade-down"
                     subtitleDataAos="fade-down"
