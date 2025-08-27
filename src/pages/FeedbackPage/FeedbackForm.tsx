@@ -56,12 +56,13 @@ function FeedbackForm({ userId }: FeedbackFormProps) {
         userId,
         data as FeedbackRequest
       );
-      if (res.statusNumber === 200) {
+      if (res.statusNumber === 201) {
         console.log(res.data);
         toast.update(
           toastId,
           updateToastConfig("Feedback berhasil terkirim", "success")
         );
+        navigate("/beri-feedback");
       } else {
         toast.update(
           toastId,
@@ -91,11 +92,12 @@ function FeedbackForm({ userId }: FeedbackFormProps) {
   return (
     <>
       <AppContainer className="flex w-full h-screen bg-gray-100/70 relative">
-        <AppContainer className="w-[20%] hidden sm:hidden md:flex lg:flex  xl:flex  h-full pt-[300px] items-start justify-center">
-          <AppContainer className="flex flex-col  w-[80%] gap-[30px] items-start w-[] mt-[20px] ">
+        <AppContainer className="w-[20%] hidden sm:hidden md:flex lg:flex xl:flex h-full flex items-center justify-center">
+          <AppContainer className="flex flex-col w-[80%] gap-[30px] items-start">
             {textFeedbackPrimary.map((data, index) => {
               return (
                 <AppContainer
+                  key={index}
                   dataAos="fade-up"
                   dataAosDelay={index * 200}
                   className="flex items-center gap-[20px] cursor-pointer "
@@ -113,10 +115,10 @@ function FeedbackForm({ userId }: FeedbackFormProps) {
                     className="text-black !items-start text-start font-unbounded"
                     subtitleClassName={`${
                       step >= index + 1 ? "text-blue-500" : "text-gray-400"
-                    } font-poppins text-[10px] text-center`}
+                    } font-poppins text-[10px] text-start`}
                     titleClassName={`text-[12px] font-bold ${
                       step >= index + 1 ? "text-blue-500" : "text-gray-500"
-                    } `}
+                    }`}
                     title={data.title}
                     subtitle={data.subtitle}
                   />
@@ -189,7 +191,7 @@ function FeedbackForm({ userId }: FeedbackFormProps) {
                       },
                     }}
                     placeholder="'Gue suka cara lo presentasi' atau 'parah banget, kerjaan kacau babiii'"
-                    name="feedbackText"
+                    name="feedback_text"
                     className="!text-black"
                   />
                   <AppButton
@@ -227,7 +229,7 @@ function FeedbackForm({ userId }: FeedbackFormProps) {
                       },
                     }}
                     placeholder="cth: pas proyek X, abis presentasi"
-                    name="feedbackContext"
+                    name="context_text"
                     className="!text-black"
                   />
                   <AppButton
@@ -265,7 +267,7 @@ function FeedbackForm({ userId }: FeedbackFormProps) {
                     }}
                     type="email"
                     placeholder="email.lo@example.com"
-                    name="emailOptIn"
+                    name="anon_email"
                     className="!text-black"
                   />
                   <AppButton

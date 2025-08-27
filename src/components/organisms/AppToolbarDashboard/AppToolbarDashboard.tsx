@@ -24,10 +24,10 @@ const AppToolbarDashboard: React.FC<AppToolDashboardProps> = (props) => {
     >
       <AppContainer className="flex justify-start items-center p-[10px] gap-[10px] w-full">
         <>
-          <AppContainer className="items-center gap-[10px] w-[30%] relative hidden sm:hidden md:flex lg:flex xl:flex ">
+          <AppContainer className="items-center gap-[10px] w-[30%] relative hidden  md:flex lg:flex xl:flex ">
             <Icon
               icon="ph:list-bold"
-              className="block sm:block md:block lg:block xl:hidden text-[32px] mr-3 text-black "
+    className="text-[32px] mr-3 text-black cursor-pointer"
               onClick={props.onClickSidebar}
             />
             <AppTextField
@@ -52,7 +52,7 @@ const AppToolbarDashboard: React.FC<AppToolDashboardProps> = (props) => {
             icon="mingcute:search-line"
             className="text-blue-400 text-[44px] p-2 bg-blue-100 rounded-lg cursor-pointer block sm:blcok md:block lg:hidden xl:hidden"
           >
-            <AppContainer className="flex items-center gap-[10px] w-full relative ">
+  <AppContainer className="items-center gap-[10px] w-[30%] relative hidden sm:hidden md:flex lg:flex xl:flex">
               <AppTextField
                 control={props.control}
                 name="search"

@@ -17,12 +17,6 @@ import * as feedbackRepository from "../../api/repository/feedbackRepository";
 
 const DashboardPage: React.FC = () => {
   useEffect(() => {
-    const userData = localStorage.getItem("userData");
-    if (!userData) {
-      navigate("/login");
-    }
-  }, []);
-  useEffect(() => {
     AOS.init({
       duration: 1000,
     });
@@ -30,7 +24,7 @@ const DashboardPage: React.FC = () => {
 
   const [currentFeedbacks, setCurrentFeedbacks] = useState<FeedbackItem[]>([]);
   const [feedbacks, setFeedbacks] = useState<FeedbackItem[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  // const [isLoading, setIsLoading] = useState<boolean>(true);
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
   const [feedbackViewOpen, setfeedbackViewOpen] = useState<boolean>(false);
   // Perbaikan: Menggunakan selectedFeedback yang konsisten
@@ -63,22 +57,23 @@ const DashboardPage: React.FC = () => {
   // };
   const getUser = localStorage.getItem("userData");
   const handleFeedbackList = async () => {
-    setIsLoading(true);
-    console.log(isLoading);
+    // setIsLoading(true);
     try {
       const res = await feedbackRepository.getFeedbacks();
-      console.log(res);
       if (res.statusNumber == 200) {
-        setFeedbacks(res.data);
-        setCurrentFeedbacks(res.data);
+        if (Array.isArray(res.data)) {
+          setFeedbacks(res.data);
+          setCurrentFeedbacks(res.data);
+        } else {
+          setFeedbacks([]);
+          setCurrentFeedbacks([]);
+        }
       } else {
         toast.error("Gagal Mengambil data Feedbacks");
       }
-      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching feedbacks:", error);
       toast.error("Gagal Mengambil data Feedbacks");
-      setIsLoading(false);
     }
   };
 
@@ -201,9 +196,9 @@ const DashboardPage: React.FC = () => {
                       />
                     </svg>
                   </AppContainer>
-                  <h3 className="text-xl font-semibold text-gray-600 mb-3">
+                  <p className="text-xl font-semibold text-gray-600 mb-3">
                     Belum Ada Feedback Masuk!
-                  </h3>
+                  </p>
                   <p className="text-gray-500 mb-4 max-w-md">
                     Sepertinya kotak feedback kamu masih kosong. Yuk, sebarkan
                     link feedback kamu dan dengarkan apa kata orang lain tentang

@@ -26,7 +26,7 @@ const UserLookupPage: React.FC = () => {
 
   const { handleSubmit, control } = useForm<UserFeedback>();
 
-  const handleUserLookup = async (data: UserFeedback) => {
+    const handleUserLookup = async (data: UserFeedback) => {
     const toastId = toast.loading("Mencari Pengguna..");
     setIsLoading(true);
     try {
@@ -48,16 +48,22 @@ const UserLookupPage: React.FC = () => {
         );
       }
       setIsLoading(false);
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
       setIsLoading(false);
-      toast.update(
-        toastId,
-        updateToastConfig(
-          "Terjadi kesalahan saat menghubungi server. Coba lagi nanti.",
-          "error"
-        )
-      );
+      if (error?.status === 404) {
+        toast.update(
+          toastId,
+          updateToastConfig("User yang kamu cari gak ada", "error")
+        );
+      } else {
+        toast.update(
+          toastId,
+          updateToastConfig(
+            "Terjadi kesalahan saat menghubungi server. Coba lagi nanti.",
+            "error"
+          )
+        );
+      }
     }
   };
 

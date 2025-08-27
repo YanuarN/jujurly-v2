@@ -41,6 +41,7 @@ const FeedbackPage: React.FC = () => {
       toast.error(
         "Terjadi kesalahan saat menghubungi server. Coba lagi nanti."
       );
+      navigate("/beri-feedback");
     }
   };
 
@@ -69,7 +70,7 @@ const FeedbackPage: React.FC = () => {
   if (userExists === false) {
     return null;
   }
-  return <FeedbackForm userId={"1"} />;
+  return <FeedbackForm userId={userId} />;
 };
 
 export default FeedbackPage;
